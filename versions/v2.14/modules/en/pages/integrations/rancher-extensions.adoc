@@ -185,29 +185,29 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-name: ui-plugin-catalog-svc
-namespace: cattle-ui-plugin-system
+  name: ui-plugin-catalog-svc
+  namespace: cattle-ui-plugin-system
 spec:
-ports:
-** name: catalog-svc-port
-port: 8080
-protocol: TCP
-targetPort: 8080
-selector:
-  catalog.cattle.io/ui-extensions-catalog-image: ui-plugin-catalog
-type: ClusterIP
+  ports:
+  - name: catalog-svc-port
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    catalog.cattle.io/ui-extensions-catalog-image: ui-plugin-catalog
+  type: ClusterIP
 ----
 
 . Create a {xref-helm-charts-in-rancher}[ClusterRepo] that targets the ClusterIP service:
 +
 [,yaml]
 ----
-  apiVersion: catalog.cattle.io/v1
-  kind: ClusterRepo
-  metadata:
- name: ui-plugin-catalog-repo
-  spec:
- url: http://ui-plugin-catalog-svc.cattle-ui-plugin-system:8080
+apiVersion: catalog.cattle.io/v1
+kind: ClusterRepo
+metadata:
+  name: ui-plugin-catalog-repo
+spec:
+  url: http://ui-plugin-catalog-svc.cattle-ui-plugin-system:8080
 ----
 
 After you successfully set up these resources, you can install the extensions from the `ui-plugin-charts` manifest into your air-gapped environment.
